@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="MavenCustomPomFilePath">
+    <option name="mavenPomFileUrl" value="file://$MODULE_DIR$/itext7-itext7-core-7.0.4.pom" />
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="barcodes" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.13" level="project" />
+    <orderEntry type="module" module-name="font-asian" />
+    <orderEntry type="module" module-name="forms" />
+    <orderEntry type="module" module-name="hyph" />
+    <orderEntry type="module" module-name="io" />
+    <orderEntry type="module" module-name="kernel" />
+    <orderEntry type="module" module-name="layout" />
+    <orderEntry type="module" module-name="pdfa" />
+    <orderEntry type="module" module-name="sign" />
+  </component>
+</module>

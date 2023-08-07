@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="svg" />
+        <module name="io" />
+        <module name="styled-xml-parser" />
+        <module name="kernel" />
+        <module name="sign" />
+        <module name="pdfa (1)" />
+        <module name="sign (1)" />
+        <module name="pdftest (1)" />
+        <module name="barcodes" />
+        <module name="layout (1)" />
+        <module name="layout" />
+        <module name="barcodes (1)" />
+        <module name="font-asian (1)" />
+        <module name="pdftest" />
+        <module name="hyph" />
+        <module name="hyph (1)" />
+        <module name="pdfa" />
+        <module name="font-asian" />
+        <module name="kernel (1)" />
+        <module name="forms" />
+        <module name="io (1)" />
+        <module name="forms (1)" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="barcodes" target="1.7" />
+      <module name="barcodes (1)" target="1.7" />
+      <module name="font-asian" target="1.7" />
+      <module name="font-asian (1)" target="1.7" />
+      <module name="forms" target="1.7" />
+      <module name="forms (1)" target="1.7" />
+      <module name="hyph" target="1.7" />
+      <module name="hyph (1)" target="1.7" />
+      <module name="io" target="1.7" />
+      <module name="io (1)" target="1.7" />
+      <module name="itext7-core" target="1.5" />
+      <module name="itext7-core (1)" target="1.5" />
+      <module name="kernel" target="1.7" />
+      <module name="kernel (1)" target="1.7" />
+      <module name="layout" target="1.7" />
+      <module name="layout (1)" target="1.7" />
+      <module name="pdfa" target="1.7" />
+      <module name="pdfa (1)" target="1.7" />
+      <module name="pdftest" target="1.7" />
+      <module name="pdftest (1)" target="1.7" />
+      <module name="root" target="1.7" />
+      <module name="root (1)" target="1.7" />
+      <module name="sign" target="1.7" />
+      <module name="sign (1)" target="1.7" />
+      <module name="styled-xml-parser" target="1.7" />
+      <module name="svg" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-io-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-hyph-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-pdfa-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-root-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-sign-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-forms-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-kernel-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-layout-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-pdftest-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-barcodes-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-font-asian-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/itext7-7.0.4/itext7-itext7-core-7.0.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/io-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/svg-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/hyph-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/pdfa-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/root-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/sign-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/forms-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/kernel-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/layout-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/pdftest-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/barcodes-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/font-asian-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/itext7-core-7.1.4.pom" />
+        <option value="$PROJECT_DIR$/lib/iText7-Core-7.1.4/styled-xml-parser-7.1.4.pom" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+</project>
