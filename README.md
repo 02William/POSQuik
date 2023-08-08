@@ -1,5 +1,5 @@
 # POSQuik
-Customer Information Management System (Java Desktop Application)
+Point of Sale & Inventory Management System (Java Desktop Application)
 
 The application has an inventory section that keeps track of inventory stock items and a tools & machines section that helps keep a record of the quantity of tools, their location, and who is in possession of said items.
 The point of sale section is linked with the inventory section, and whenever sales are made inventory stock items will be affected by the transactions.
