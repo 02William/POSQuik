@@ -152,7 +152,7 @@ public class GeneratePDF {
                 detailsCol.addCell(new Cell().add("FNB Bank" + "\nAccount Number: " + "62079862051").setFontSize(8f).setBorder(Border.NO_BORDER));
                 detailsCol.addCell(new Cell().add("Total(Inc) P:         " + total + "\nDiscount P:          " + pdfDiscount).setFontSize(9f)
                         .setBorder(Border.NO_BORDER));
-                detailsCol.addCell(new Cell().add("2. 60% deposit along with the order, balance due upon arrival\nat " + Main_menu.companyName + ".\n"
+                detailsCol.addCell(new Cell().add("2. 70% deposit along with the order, balance due upon arrival\nat " + Main_menu.companyName + ".\n"
                         + "3. Cash refunds attract 3% handling fee.\n"
                         + "4. All quoations are valid for ONLY 7 days after quotation date.\n"
                         + "5. All board cut to sizes according to customers approved cutting\nlist are not refundable or replaceable.\n"
@@ -323,7 +323,7 @@ public class GeneratePDF {
                 detailsCol.addCell(new Cell().add("FNB Bank" + "\nAccount Number: " + "62079862051").setFontSize(8f).setBorder(Border.NO_BORDER));
                 detailsCol.addCell(new Cell().add("Total(Inc) P:         " + total + "\nDiscount P:          " + pdfDiscount).setFontSize(9f)
                         .setBorder(Border.NO_BORDER));
-                detailsCol.addCell(new Cell().add("2. 60% deposit along with the order, balance due upon arrival\nat " + Main_menu.companyName + ".\n"
+                detailsCol.addCell(new Cell().add("2. 70% deposit along with the order, balance due upon arrival\nat " + Main_menu.companyName + ".\n"
                         + "3. Cash refunds attract 3% handling fee.\n"
                         + "4. All quoations are valid for ONLY 7 days after quotation date.\n"
                         + "5. All board cut to sizes according to customers approved cutting\nlist are not refundable or replaceable.\n"

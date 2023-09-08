@@ -4,13 +4,19 @@ import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
@@ -277,6 +283,8 @@ public class Main_menu extends javax.swing.JFrame {
         select_prod = new javax.swing.JComboBox<>();
         jPanel24 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel80 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
         jPanel20 = new javax.swing.JPanel();
         totalPrice = new javax.swing.JLabel();
@@ -872,29 +880,29 @@ public class Main_menu extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setText("Available Stocks:");
-        jPanel6.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 8, -1, -1));
+        jPanel6.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
         jLabel31.setText("Select Product:");
-        jPanel6.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 42, -1, -1));
+        jPanel6.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(255, 255, 255));
         jLabel32.setText("Purchase Quantity:");
-        jPanel6.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(488, 8, -1, -1));
+        jPanel6.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, -1, -1));
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(255, 255, 255));
         jLabel30.setText("Product ID:");
-        jPanel6.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 73, -1, -1));
+        jPanel6.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
         prodID_search.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jPanel6.add(prodID_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 73, 150, 25));
+        jPanel6.add(prodID_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 150, 25));
 
         qty.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         qty.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, null, 1.0d));
-        jPanel6.add(qty, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 6, 150, -1));
+        jPanel6.add(qty, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 150, -1));
 
         jLabel3.setBackground(new java.awt.Color(204, 204, 204));
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -926,16 +934,16 @@ public class Main_menu extends javax.swing.JFrame {
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 58, -1, -1));
+        jPanel6.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 60, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/cart.png"))); // NOI18N
-        jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(576, 66, -1, -1));
+        jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, -1, -1));
 
         avail_stocks.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         avail_stocks.setForeground(new java.awt.Color(255, 255, 255));
         avail_stocks.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         avail_stocks.setText("0");
-        jPanel6.add(avail_stocks, new org.netbeans.lib.awtextra.AbsoluteConstraints(176, 8, 157, -1));
+        jPanel6.add(avail_stocks, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 157, -1));
 
         select_prod.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         select_prod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a Product" }));
@@ -945,7 +953,7 @@ public class Main_menu extends javax.swing.JFrame {
                 select_prodActionPerformed(evt);
             }
         });
-        jPanel6.add(select_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 40, 230, -1));
+        jPanel6.add(select_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 230, -1));
 
         jPanel24.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -976,7 +984,25 @@ public class Main_menu extends javax.swing.JFrame {
             .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 73, -1, 25));
+        jPanel6.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, -1, 25));
+
+        jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/import.png"))); // NOI18N
+        jLabel53.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel53.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel53MouseClicked(evt);
+            }
+        });
+        jPanel6.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
+
+        jLabel80.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/save.png"))); // NOI18N
+        jLabel80.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel80.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel80MouseClicked(evt);
+            }
+        });
+        jPanel6.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 60, -1, -1));
 
         jPanel17.setBackground(new java.awt.Color(51, 51, 51));
         jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -2854,7 +2880,7 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void settings_panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings_panelMouseClicked
 
-        int demo = 0;
+        int demo = 1;
         if (demo == 1) {
 
             // Display settings screen
@@ -4358,6 +4384,185 @@ public class Main_menu extends javax.swing.JFrame {
         jLabel74.setForeground(Color.white);
     }//GEN-LAST:event_jLabel74MouseExited
 
+    private void jLabel80MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel80MouseClicked
+        // Method to save data from POS table to a file
+        
+        int k = 0;
+        
+        if (k == 0){
+            
+            JOptionPane.showMessageDialog(null, "Feature Unavailable","Unavailable", JOptionPane.INFORMATION_MESSAGE);
+            
+        } else{
+            
+            JFileChooser fileChooser =  new JFileChooser();
+            int result = fileChooser.showSaveDialog(null);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+
+                try {
+                    File selectedFile = fileChooser.getSelectedFile();
+
+                    // Warning message to user when about to save a file with the an already existing file name
+                    if (selectedFile.exists()) {
+                        int option = JOptionPane.showConfirmDialog(null, "The file already exists. Do you want to overwrite it?",
+                                "File Exists", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); // Warning message
+                        if (option != JOptionPane.YES_OPTION) {
+                            return; // User chose not to overwrite, so returns without saving.
+                        }
+                    }
+
+                    // Saving data from POS Table to a file
+                    try (FileWriter writer = new FileWriter(selectedFile)) {
+                        for (int i = 0; i < posTable.getRowCount(); i++){ // getting number of rows
+                            for (int j = 0; j < posTable.getColumnCount(); j++){ // getting number of columns
+                                writer.write(posTable.getValueAt(i,j).toString()); // writing data to file
+                                if (j < posTable.getColumnCount() - 1){
+                                    writer.write(","); // delimitter to divide columns in pos table
+                                }
+                            }
+                            writer.write("\n"); // used to go to newline for the next row in the pos Table containig data
+                        }
+                        writer.close();
+                    }
+                    // Displays file saved message to user
+                    JOptionPane.showMessageDialog(rootPane, "File saved Successfully.", "File Saved.", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (IOException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }
+        }
+        
+        
+
+    }//GEN-LAST:event_jLabel80MouseClicked
+
+    private void jLabel53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseClicked
+        // Method to load data from file to pos Table
+        
+        int i = 0;
+        
+        if (i == 0){
+            JOptionPane.showMessageDialog(null, "Feature Unavailable","Unavailable", JOptionPane.INFORMATION_MESSAGE);
+            
+        } else{
+            
+            JFileChooser fileChooser =  new JFileChooser();
+            int result = fileChooser.showOpenDialog(null);
+
+            if (result == JFileChooser.APPROVE_OPTION){
+
+                try {
+
+                    File file = fileChooser.getSelectedFile();
+                    Scanner scanner = new Scanner(file);
+                    ArrayList<String[]> data = new ArrayList<>();
+                    int expectedColumnCount = posTable.getColumnCount(); // Get the expected column count
+
+
+                    while (scanner.hasNextLine()){
+                        String line = scanner.nextLine();
+                        String[] values = line.split(",");
+
+                        // Check if the number of columns in the current row matches the expected count
+                        if (values.length != expectedColumnCount) {
+                            JOptionPane.showMessageDialog(null, "Error: The number of columns in the file does not match the expected format.",
+                                    "Data Format Error", JOptionPane.ERROR_MESSAGE);
+                            scanner.close();
+                            return; // Return without loading data
+                        }
+                            data.add(values);
+                    }
+                    scanner.close();
+
+                    // Convetong the ArrayList data to a 2D array
+                    String[][] dataArray = data.toArray(new String [0][]);
+
+                    // Creating new DefaultTableModel with the loaded data
+                    DefaultTableModel newModel = new DefaultTableModel(dataArray, expectedColumnCount);
+                    posTable.setModel(newModel); // Set the new model to the POS Table
+
+                } catch (IOException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+            }            
+        }
+        
+        
+
+
+
+//        JFileChooser fileChooser = new JFileChooser();
+//    int result = fileChooser.showOpenDialog(null);
+//    if (result == JFileChooser.APPROVE_OPTION) {
+//        try {
+//            File file = fileChooser.getSelectedFile();
+//            Scanner scanner = new Scanner(file);
+//            ArrayList<String[]> data = new ArrayList<>();
+//
+//            // Determine the expected column count from the first row of data
+//            int expectedColumnCount = 0;
+//            if (scanner.hasNextLine()) {
+//                String firstLine = scanner.nextLine();
+//                expectedColumnCount = firstLine.split(",").length;
+//                data.add(firstLine.split(",")); // Add the first row to the data
+//            }
+//
+//            // Load the rest of the data
+//            while (scanner.hasNextLine()) {
+//                String line = scanner.nextLine();
+//                String[] values = line.split(",");
+//
+//                // Check if the number of columns in the current row matches the expected count
+//                if (values.length != expectedColumnCount) {
+//                    JOptionPane.showMessageDialog(null, "Error: The number of columns in the file does not match the expected format.", "Data Format Error", JOptionPane.ERROR_MESSAGE);
+//                    scanner.close();
+//                    return; // Return without loading data
+//                }
+//
+//                data.add(values);
+//            }
+//            scanner.close();
+//
+//            // Convert the ArrayList data to a 2D array
+//            String[][] dataArray = data.toArray(new String[0][]);
+//
+//            // Create a new DefaultTableModel with the loaded data and expected column count
+//            DefaultTableModel newModel = new DefaultTableModel(dataArray, expectedColumnCount);
+//            posTable.setModel(newModel); // Set the new model to the JTable
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }//GEN-LAST:event_jLabel53MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -4469,6 +4674,7 @@ public class Main_menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
@@ -4498,6 +4704,7 @@ public class Main_menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
