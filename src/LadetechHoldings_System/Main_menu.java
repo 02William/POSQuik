@@ -90,6 +90,7 @@ public class Main_menu extends javax.swing.JFrame {
         }).start();
     }
     
+    // Populatinng inventory list with data from database
     private void inventoryList(){
         
         try {
@@ -107,6 +108,7 @@ public class Main_menu extends javax.swing.JFrame {
         }        
     }
     
+    // Populatinng user list with data from database
     private void userList(){
         
         try {
@@ -164,12 +166,12 @@ public class Main_menu extends javax.swing.JFrame {
         
     }
     
-    public Object posCellValue (int i, int j){
-        
-        Object val = posTable.getValueAt(i, j);
-        return val;
-        
-    }
+//    public Object posCellValue (int i, int j){
+//        
+//        Object val = posTable.getValueAt(i, j);
+//        return val;
+//        
+//    }
     
     public static JTable getJTable() {
     return posTable; // Assuming that posTable is the JTable object in your Main_menu class
@@ -3024,6 +3026,9 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void inventory_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventory_tableMouseClicked
         
+        /* Populating description fields of a product selected on inventory table*/
+        
+        // Getting data from each column in inventory table and storing them in a variable
         int t = inventory_table.getSelectedRow();
         String pid = inventory_table.getValueAt(t, 0).toString();
         String pn = inventory_table.getValueAt(t, 1).toString();
@@ -3031,6 +3036,7 @@ public class Main_menu extends javax.swing.JFrame {
         String pp = inventory_table.getValueAt(t, 3).toString();
         String pd = inventory_table.getValueAt(t, 4).toString();
 
+        // Setting data on input fields in the inventory screen
         product_id.setText(pid);
         product_name.setText(pn);
         stock_level.setText(sl);
@@ -3041,12 +3047,15 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void showAll_inventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showAll_inventoryMouseClicked
         
+        /* Displaying all inventory items on inventory table */
+        
         try {
             DefaultTableModel table = (DefaultTableModel) inventory_table.getModel();
             Statement state = POS_source.mycon().createStatement();
-            rs = state.executeQuery("select * from inventory_data");
+            rs = state.executeQuery("select * from inventory_data"); // Query to get inventory data from database
             table.setRowCount(0);
 
+            // Adding each inventory item in rows into the inventory table
             while (rs.next()) {
 
                 Object o[] = {rs.getString("product_id"), rs.getString("product_name"), rs.getString("stock_level"), 
@@ -3060,30 +3069,38 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void delete_toolsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete_toolsMouseClicked
         
+        /* Deleting tool/machine from tools & machine list */
+        
         try {
 
             Statement state = POS_source.mycon().createStatement();
+            
             if (tool_id.getText().isEmpty()) {
 
+                // Message to user to select a tool to delete if button is pressed when no selection has been made
                 JOptionPane.showMessageDialog(null, "Select a tool / machine from the table you want to delete.");
 
             } else {
                 
+                // Warning message to user that they are about to delete the tool/machine
                 int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to delete the tool / machine \"" 
                         + tool_name.getText() + "\" from the system?\nThis action cannot be reversed.", "WARNING", 
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 
+                // Tool/machine deleted from tools & machine list when the yes option is chosen to delete the tool/machine
                 if(result == JOptionPane.YES_OPTION){
                     
-                    state.executeUpdate("delete from tool_data where tool_id = '" + tool_id.getText() + "'");
-                    JOptionPane.showMessageDialog(null, "Delete successful.");
+                    state.executeUpdate("delete from tool_data where tool_id = '" + tool_id.getText() + "'"); // Delete statement to delete tool/machine 
+                    JOptionPane.showMessageDialog(null, "Delete successful."); // Delete success message displayed to user
                     pss.clearTools(tool_id, tool_name, tool_quantity, tool_possession, tool_details);
                     search_tools.setText("Search Tools & Machines...");
                     
+                    // Clearing all rows after deleting tool
                     DefaultTableModel table = (DefaultTableModel) tools_table.getModel();
                     table.setRowCount(0);
 
                 }else if (result == JOptionPane.NO_OPTION){
+                    // Nothing done if user selects No option after warning message to delete tool/machine
                 } 
             }
         } catch (HeadlessException | SQLException x) {
@@ -3094,27 +3111,34 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void update_toolsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update_toolsMouseClicked
         
+        /* Updating tool/machine information */
+        
         try {
             Statement state = POS_source.mycon().createStatement();
+            
             if (tool_id.getText().isEmpty()) {
-
+                
+                // Message displayed to user if no tool/machiine is selected
                 JOptionPane.showMessageDialog(null, "Select a tool / machine from the table you want to update.");
                 
             } else {
 
+                // Updating information of selected tool/machine
                 state.executeUpdate("update tool_data set  tool_name = '" + tool_name.getText() + "' , quantity = '" 
                         + tool_quantity.getText() + "', possession_of = '" + tool_possession.getText() + "', details = '" + tool_details.getText() 
                         + "' where tool_id = '" + tool_id.getText() + "'");
-                JOptionPane.showMessageDialog(rootPane, "Update successful.");
+                JOptionPane.showMessageDialog(rootPane, "Update successful."); // Update successful message displayed to user
                 pss.clearTools(tool_id, tool_name, tool_quantity, tool_possession, tool_details);
                 search_inventory.setText("Search Tools & Machines...");
                 
+                // Clearing all rows beiing displayed in the table 
                 DefaultTableModel table = (DefaultTableModel) tools_table.getModel();
                 table.setRowCount(0);
                 
             }
         } catch (HeadlessException | SQLException ex) {
             System.out.println(ex.getMessage());
+            // Update unscuccessful message displayed to user
             JOptionPane.showMessageDialog(null, "Update unscuccessful. Check all input fields.");
         }
         
@@ -3122,56 +3146,69 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void update_inventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update_inventoryMouseClicked
         
+        /* Updating inventory information */
+        
         try {
             Statement state = POS_source.mycon().createStatement();
             if (product_id.getText().isEmpty()) {
 
+                // Message displayed to user if no inventory item is selected
                 JOptionPane.showMessageDialog(null, "Select a product from the table you want to update.");
                 
             } else {
 
+                // Updating information of selected inventory item
                 state.executeUpdate("update inventory_data set  product_name = '" + product_name.getText() + "' , stock_level = '" 
                         + stock_level.getText() + "', price = '" + product_price.getText() + "', description = '" + product_descr.getText() 
                         + "' where product_id = '" + product_id.getText() + "'");
-                JOptionPane.showMessageDialog(rootPane, "Update successful.");
+                JOptionPane.showMessageDialog(rootPane, "Update successful."); // Update successful message displayed to user
                 pss.clearInventory(product_id, product_name, stock_level, product_price, product_descr);
                 search_inventory.setText("Search product name...");
                 
+                // Clearing all rows beiing displayed in the table 
                 DefaultTableModel table = (DefaultTableModel) inventory_table.getModel();
                 table.setRowCount(0);
                 
             }
         } catch (HeadlessException | SQLException ex) {
             System.out.println(ex);
+            // Update unscuccessful message displayed to user
             JOptionPane.showMessageDialog(null, "Update unscuccessful. Check all input fields.");
         }      
     }//GEN-LAST:event_update_inventoryMouseClicked
 
     private void delete_inventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete_inventoryMouseClicked
         
+        /* Deleting Inventory item from inventory list */
+        
         try {
 
             Statement state = POS_source.mycon().createStatement();
             if (product_id.getText().isEmpty()) {
 
+                // Message to user to select a tool to delete if button is pressed when no selection has been made
                 JOptionPane.showMessageDialog(null, "Select a product from the table you want to delete.");
 
             } else {
                 
+                // Warning message to user that they are about to delete the inventory item
                 int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to delete the product \"" + product_name.getText() 
                         + "\" from the inventory?\nThis action cannot be reversed.", "WARNING", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 
+                // Inventory item deleted from inventory list when the yes option is chosen to delete the inventory item
                 if(result == JOptionPane.YES_OPTION){
                     
-                    state.executeUpdate("delete from inventory_data where product_id = '" + product_id.getText() + "'");
-                    JOptionPane.showMessageDialog(null, "Delete successful.");
+                    state.executeUpdate("delete from inventory_data where product_id = '" + product_id.getText() + "'"); // Delete statement to delete inventory item
+                    JOptionPane.showMessageDialog(null, "Delete successful."); // Delete success message displayed to user
                     pss.clearInventory(product_id, product_name, stock_level, product_price, product_descr);
                     search_inventory.setText("Search product name...");
                     
+                    // Clearing all rows after deleting inventory item
                     DefaultTableModel table = (DefaultTableModel) inventory_table.getModel();
                     table.setRowCount(0);
 
                 }else if (result == JOptionPane.NO_OPTION){
+                    // Nothing done if user selects No option after warning message to delete inventory item
                 } 
             }
         } catch (HeadlessException | SQLException x) {
@@ -3181,6 +3218,8 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void refresh_inventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refresh_inventoryMouseClicked
         
+        /* Clearing all items in inventory screen */
+        
         DefaultTableModel table = (DefaultTableModel) inventory_table.getModel();
         table.setRowCount(0);
         pss.clearInventory(product_id, product_name, stock_level, product_price, product_descr);
@@ -3189,6 +3228,8 @@ public class Main_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_refresh_inventoryMouseClicked
 
     private void search_inventoryKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search_inventoryKeyPressed
+        
+        // Text on search bar for inventory screen
         if (search_inventory.getText().equals("Search product name...")) {
             search_inventory.setText("");
         }
@@ -3196,22 +3237,30 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void search_inventoryKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search_inventoryKeyReleased
 
-        String search = search_inventory.getText();
+        /* Searching inventory items using search bar */
+        
+        String search = search_inventory.getText(); // Variable used in sql query
 
+        // Getting inventory data from values typed in search bar
         try {
             DefaultTableModel table = (DefaultTableModel) inventory_table.getModel();
             table.setRowCount(0);
             Statement state = POS_source.mycon().createStatement();
+            
+            // Query used to get data from database
             rs = state.executeQuery("select * from inventory_data  where  product_name like '%" + search
                 + "%' or description like '%" + search + "%' or product_id like '%" + search + "%'");
 
             if (search.isEmpty()) {
 
+                // Text displayed if theres nothing in the text box
                 search_inventory.setText("Search product name...");
+                // Clearing input boxes when a search is made
                 pss.clearInventory(product_id, product_name, stock_level, product_price, product_descr);
 
             } else {
 
+                // Matching results found from database query disaplyed on the inventory table
                 while (rs.next()) {
 
                     Object o[] = {rs.getString("product_id"), rs.getString("product_name"), rs.getString("stock_level"),
@@ -3227,12 +3276,15 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void show_toolsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_show_toolsMouseClicked
         
+        /* Displaying all tools/machine items on tools/machine table */
+                
         try {
             DefaultTableModel table = (DefaultTableModel) tools_table.getModel();
             Statement state = POS_source.mycon().createStatement();
-            rs = state.executeQuery("select * from tool_data");
+            rs = state.executeQuery("select * from tool_data"); // Query to get tools/machine data from database
             table.setRowCount(0);
 
+            // Adding each tools/machine item in rows into the tools/machine table
             while (rs.next()) {
 
                 Object o[] = {rs.getString("tool_id"), rs.getString("tool_name"), rs.getString("quantity"), 
@@ -3246,6 +3298,9 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void tools_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tools_tableMouseClicked
         
+        /* Populating description fields of a tool/machine selected on tools/machine table*/
+        
+        // Getting data from each column in tools/machine table and storing them in a variable
         int t = tools_table.getSelectedRow();
         String tid = tools_table.getValueAt(t, 0).toString();
         String tn = tools_table.getValueAt(t, 1).toString();
@@ -3253,6 +3308,7 @@ public class Main_menu extends javax.swing.JFrame {
         String tp = tools_table.getValueAt(t, 3).toString();
         String td = tools_table.getValueAt(t, 4).toString();
 
+        // Setting data on input fields in the tools/machine screen
         tool_id.setText(tid);
         tool_name.setText(tn);
         tool_quantity.setText(tq);
@@ -3263,6 +3319,8 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void refresh_toolsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refresh_toolsMouseClicked
         
+        /* Clearing all items in tools/machines screen */
+        
         DefaultTableModel table = (DefaultTableModel) tools_table.getModel();
         table.setRowCount(0);
         pss.clearInventory(tool_id, tool_name, tool_quantity, tool_possession, tool_details);
@@ -3271,30 +3329,39 @@ public class Main_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_refresh_toolsMouseClicked
 
     private void search_toolsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search_toolsKeyPressed
+        
+        // Text on search bar for tools/machine screen
         if (search_tools.getText().equals("Search Tools & Machines...")) {
-
             search_tools.setText("");
         }
     }//GEN-LAST:event_search_toolsKeyPressed
 
     private void search_toolsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search_toolsKeyReleased
         
-        String search = search_tools.getText();
+        /* Searching tools/machine items using search bar */                       
+        
+        String search = search_tools.getText(); // Variable used in sql query
 
+        // Getting tools/machine data from values typed in search bar
         try {
             DefaultTableModel table = (DefaultTableModel) tools_table.getModel();
             table.setRowCount(0);
             Statement state = POS_source.mycon().createStatement();
+            
+            // Query used to get data from database
             rs = state.executeQuery("select * from tool_data  where  tool_name like '%" + search
                 + "%' or possession_of like '%" + search + "%' or details like '%" + search + "%' or tool_id like '%" + search + "%'");
 
             if (search.isEmpty()) {
 
+                // Text displayed if theres nothing in the text box
                 search_tools.setText("Search Tools & Machines...");
+                // Clearing input boxes when a search is made
                 pss.clearTools(tool_id, tool_name, tool_quantity, tool_possession, tool_details);
 
             } else {
 
+                // Matching results found from database query disaplyed on the tools/machine table
                 while (rs.next()) {
 
                     Object o[] = {rs.getString("tool_id"), rs.getString("tool_name"), rs.getString("quantity"),
@@ -3309,7 +3376,7 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void add_inventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_inventoryMouseClicked
         
-        // Display form to add iventroy items
+        /* Display form to add new inventroy items */
         Add_inventory ai = new Add_inventory();
         ai.show();
 
@@ -3317,6 +3384,7 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void add_toolsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_toolsMouseClicked
         
+        /* Displaying form used to add new tools */
         Add_Tools ad = new Add_Tools();
         ad.show();
         
@@ -3324,8 +3392,9 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void select_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_select_prodActionPerformed
 
-
-        String selected_prod = select_prod.getSelectedItem().toString(); 
+        /* Getting product details from database using select action (dropdown box for products) */
+        
+        String selected_prod = select_prod.getSelectedItem().toString(); // Variable used for query
             
         if (selected_prod.equals("Select a Product")){
                 
@@ -3335,11 +3404,13 @@ public class Main_menu extends javax.swing.JFrame {
                         
             try {
                 
+                // Query to get data from database of product selected
                 String query = "Select product_id, stock_level, price from inventory_data where product_name=?";
                 pst = POS_source.mycon().prepareStatement(query);
                 pst.setString(1, selected_prod);
                 rs = pst.executeQuery();   
 
+                // Setting all the data gathered about the product in their respected places
                 if (rs.next()) {
 
                     pos_prodID.setText(rs.getString("product_id"));
@@ -3432,26 +3503,27 @@ public class Main_menu extends javax.swing.JFrame {
 
         // Searching for products in database using the product ID field          
          try {
-                
-                String query = "Select product_id, stock_level, price, product_name from inventory_data where product_id=?";
-                pst = POS_source.mycon().prepareStatement(query);
-                pst.setString(1, prodID_search.getText());
-                rs = pst.executeQuery();   
+             
+             // Query used to get data using product id search from the database
+             String query = "Select product_id, stock_level, price, product_name from inventory_data where product_id=?";
+             pst = POS_source.mycon().prepareStatement(query);
+             pst.setString(1, prodID_search.getText());
+             rs = pst.executeQuery();   
 
-                if (rs.next()) {
-
-                    pos_prodID.setText(rs.getString("product_id"));
-                    prodID_search.setText(rs.getString("product_id"));
-                    avail_quantity.setText(rs.getString("stock_level"));
-                    avail_stocks.setText(rs.getString("stock_level"));
-                    unit_price.setText(rs.getString("price"));
-                    select_prod.setSelectedItem(rs.getString("product_name"));
-
-                }
-
-            } catch (SQLException ex) {
+             // Setting all the data gathered about the product in their respected places
+             if (rs.next()) {
+                 pos_prodID.setText(rs.getString("product_id"));
+                 prodID_search.setText(rs.getString("product_id"));
+                 avail_quantity.setText(rs.getString("stock_level"));
+                 avail_stocks.setText(rs.getString("stock_level"));
+                 unit_price.setText(rs.getString("price"));
+                 select_prod.setSelectedItem(rs.getString("product_name"));
+             
+             }
+         
+         } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
-            }
+         }
         
     }//GEN-LAST:event_jLabel33MouseClicked
 
