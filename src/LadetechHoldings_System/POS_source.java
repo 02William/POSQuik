@@ -81,7 +81,7 @@ public class POS_source {
         text3.setText("0");
         text4.setText("0");
         text5.setText("0.0");
-        text6.setText("");
+        text6.setText("STATUS UNAVAILABLE");
         text7.setText("0.00");
         text8.setText("0");
         text9.setText("0");
