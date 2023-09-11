@@ -3424,6 +3424,25 @@ public class Main_menu extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
+            
+            // Settings stock status information on POS screen
+            
+            int stock = Integer.parseInt(avail_quantity.getText());
+            
+            if (stock >= 100){
+                stock_status.setText("HIGH");
+                stock_status.setForeground(Color.green);
+            } else if (stock >= 50){
+                stock_status.setText("MEDIUM");
+                stock_status.setForeground(Color.blue);
+            } else if (stock >= 1){
+                stock_status.setText("LOW STOCK");
+                stock_status.setForeground(Color.red);
+            } else{
+                stock_status.setText("NO AVAILABLE STOCK");
+                stock_status.setForeground(Color.red);
+            }
+            
         }
         
     }//GEN-LAST:event_select_prodActionPerformed
@@ -3752,6 +3771,7 @@ public class Main_menu extends javax.swing.JFrame {
 
         // Resetting all other values in the POS screen
         pss.posDefault(pos_prodID, prodID_search, avail_quantity, avail_stocks, unit_price, stock_status, change, discount, paid);
+        stock_status.setForeground(Color.black);
         select_prod.setSelectedIndex(0);
         totalPrice.setText("0.00");
         qty.setValue(1);
@@ -3866,6 +3886,11 @@ public class Main_menu extends javax.swing.JFrame {
 
             }
             
+            
+        } 
+        // Message to user if sale button is clicked when nothing has been added to the cart    
+        else{
+            JOptionPane.showMessageDialog(null, "Add a product to cart first.", "Add To Cart", JOptionPane.INFORMATION_MESSAGE);
         }
         
     }//GEN-LAST:event_jLabel16MouseClicked
@@ -3885,6 +3910,10 @@ public class Main_menu extends javax.swing.JFrame {
 
             QuotationDetails qd = new QuotationDetails(); // Get customer additional customer details with QuotationDetails class
             qd.show();
+            
+        // Message to user if quotation button is clicked when nothing has been added to the cart    
+        } else{
+            JOptionPane.showMessageDialog(null, "Add a product to cart first.", "Add To Cart", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jLabel15MouseClicked
 
