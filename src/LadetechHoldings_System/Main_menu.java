@@ -23,6 +23,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+import java.io.FileReader;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -988,23 +994,27 @@ public class Main_menu extends javax.swing.JFrame {
 
         jPanel6.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, -1, 25));
 
+        jLabel53.setForeground(new java.awt.Color(255, 255, 255));
         jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/import.png"))); // NOI18N
+        jLabel53.setText("import");
         jLabel53.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel53.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel53MouseClicked(evt);
             }
         });
-        jPanel6.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
+        jPanel6.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 10, -1, -1));
 
+        jLabel80.setForeground(new java.awt.Color(255, 255, 255));
         jLabel80.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/save.png"))); // NOI18N
+        jLabel80.setText("save");
         jLabel80.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel80.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel80MouseClicked(evt);
             }
         });
-        jPanel6.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 60, -1, -1));
+        jPanel6.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 60, -1, -1));
 
         jPanel17.setBackground(new java.awt.Color(51, 51, 51));
         jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -4487,14 +4497,6 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void jLabel80MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel80MouseClicked
         // Method to save data from POS table to a file
-        
-        int k = 0;
-        
-        if (k == 0){
-            
-            JOptionPane.showMessageDialog(null, "Feature Unavailable","Unavailable", JOptionPane.INFORMATION_MESSAGE);
-            
-        } else{
             
             JFileChooser fileChooser =  new JFileChooser();
             int result = fileChooser.showSaveDialog(null);
@@ -4533,135 +4535,48 @@ public class Main_menu extends javax.swing.JFrame {
                     System.out.println("Error: " + e.getMessage());
                 }
             }
-        }
-        
-        
 
     }//GEN-LAST:event_jLabel80MouseClicked
 
     private void jLabel53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseClicked
-        // Method to load data from file to pos Table
-        
-        int i = 0;
-        
-        if (i == 0){
-            JOptionPane.showMessageDialog(null, "Feature Unavailable","Unavailable", JOptionPane.INFORMATION_MESSAGE);
-            
-        } else{
+
+            // Method to load data from a file to JTable
             
             JFileChooser fileChooser =  new JFileChooser();
             int result = fileChooser.showOpenDialog(null);
-
+            
             if (result == JFileChooser.APPROVE_OPTION){
 
+                // Selecting file 
+                File file = fileChooser.getSelectedFile();
+                
                 try {
-
-                    File file = fileChooser.getSelectedFile();
-                    Scanner scanner = new Scanner(file);
-                    ArrayList<String[]> data = new ArrayList<>();
-                    int expectedColumnCount = posTable.getColumnCount(); // Get the expected column count
-
-
-                    while (scanner.hasNextLine()){
-                        String line = scanner.nextLine();
-                        String[] values = line.split(",");
-
-                        // Check if the number of columns in the current row matches the expected count
-                        if (values.length != expectedColumnCount) {
-                            JOptionPane.showMessageDialog(null, "Error: The number of columns in the file does not match the expected format.",
-                                    "Data Format Error", JOptionPane.ERROR_MESSAGE);
-                            scanner.close();
-                            return; // Return without loading data
-                        }
-                            data.add(values);
+                    
+                    List<String[]> data;
+                    try ( 
+                        // Load CSV data into a list of string arrays
+                        CSVReader reader = new CSVReader(new FileReader(file))) {
+                        data = reader.readAll();
                     }
-                    scanner.close();
-
-                    // Convetong the ArrayList data to a 2D array
-                    String[][] dataArray = data.toArray(new String [0][]);
-
-                    // Creating new DefaultTableModel with the loaded data
-                    DefaultTableModel newModel = new DefaultTableModel(dataArray, expectedColumnCount);
-                    posTable.setModel(newModel); // Set the new model to the POS Table
-
+                    
+                    // Convert the list of string arrays to a 2D array for the JTable
+                    String[][] dataArray = new String[data.size()][];
+                    data.toArray(dataArray);
+                    
+                    // Setting header information on posTable
+                    String[] header = {"Product ID", "Product Name", "Purchase Quantity", "Unit Price", "Tax Amount", "Sub Total"};
+                    
+                    // Create a DefaultTableModel with the data and headers
+                    DefaultTableModel model = new DefaultTableModel(dataArray, header);
+                    posTable.setModel(model);
+                    
                 } catch (IOException e) {
-                    System.out.println("Error: " + e.getMessage());
+                    e.getMessage();
+                } catch (CsvException ex) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }            
-        }
-        
-        
-
-
-
-//        JFileChooser fileChooser = new JFileChooser();
-//    int result = fileChooser.showOpenDialog(null);
-//    if (result == JFileChooser.APPROVE_OPTION) {
-//        try {
-//            File file = fileChooser.getSelectedFile();
-//            Scanner scanner = new Scanner(file);
-//            ArrayList<String[]> data = new ArrayList<>();
-//
-//            // Determine the expected column count from the first row of data
-//            int expectedColumnCount = 0;
-//            if (scanner.hasNextLine()) {
-//                String firstLine = scanner.nextLine();
-//                expectedColumnCount = firstLine.split(",").length;
-//                data.add(firstLine.split(",")); // Add the first row to the data
-//            }
-//
-//            // Load the rest of the data
-//            while (scanner.hasNextLine()) {
-//                String line = scanner.nextLine();
-//                String[] values = line.split(",");
-//
-//                // Check if the number of columns in the current row matches the expected count
-//                if (values.length != expectedColumnCount) {
-//                    JOptionPane.showMessageDialog(null, "Error: The number of columns in the file does not match the expected format.", "Data Format Error", JOptionPane.ERROR_MESSAGE);
-//                    scanner.close();
-//                    return; // Return without loading data
-//                }
-//
-//                data.add(values);
-//            }
-//            scanner.close();
-//
-//            // Convert the ArrayList data to a 2D array
-//            String[][] dataArray = data.toArray(new String[0][]);
-//
-//            // Create a new DefaultTableModel with the loaded data and expected column count
-//            DefaultTableModel newModel = new DefaultTableModel(dataArray, expectedColumnCount);
-//            posTable.setModel(newModel); // Set the new model to the JTable
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            }
+            total_purchase(); // Calculating total from imported file
     }//GEN-LAST:event_jLabel53MouseClicked
 
     /**
