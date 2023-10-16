@@ -1002,6 +1002,12 @@ public class Main_menu extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel53MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel53MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel53MouseExited(evt);
+            }
         });
         jPanel6.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 10, -1, -1));
 
@@ -1012,6 +1018,12 @@ public class Main_menu extends javax.swing.JFrame {
         jLabel80.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel80MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel80MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel80MouseExited(evt);
             }
         });
         jPanel6.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 60, -1, -1));
@@ -4584,6 +4596,22 @@ public class Main_menu extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jLabel80MouseClicked
+
+    private void jLabel53MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseEntered
+        jLabel53.setForeground(Color.blue);
+    }//GEN-LAST:event_jLabel53MouseEntered
+
+    private void jLabel53MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseExited
+        jLabel53.setForeground(Color.white);
+    }//GEN-LAST:event_jLabel53MouseExited
+
+    private void jLabel80MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel80MouseEntered
+        jLabel80.setForeground(Color.blue);
+    }//GEN-LAST:event_jLabel80MouseEntered
+
+    private void jLabel80MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel80MouseExited
+        jLabel80.setForeground(Color.white);
+    }//GEN-LAST:event_jLabel80MouseExited
 
     /**
      * @param args the command line arguments
