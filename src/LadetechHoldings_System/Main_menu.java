@@ -1512,7 +1512,7 @@ public class Main_menu extends javax.swing.JFrame {
                         .addComponent(logo6)
                         .addComponent(search_inventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(logo5))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel14.setBackground(new java.awt.Color(204, 204, 204));
@@ -1876,7 +1876,7 @@ public class Main_menu extends javax.swing.JFrame {
                         .addComponent(logo4)
                         .addComponent(search_tools, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(logo3))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
@@ -4495,14 +4495,55 @@ public class Main_menu extends javax.swing.JFrame {
         jLabel74.setForeground(Color.white);
     }//GEN-LAST:event_jLabel74MouseExited
 
+    private void jLabel53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseClicked
+
+        // Method to load data from a file to JTable
+
+        JFileChooser fileChooser =  new JFileChooser();
+        int result = fileChooser.showOpenDialog(null);
+
+        if (result == JFileChooser.APPROVE_OPTION){
+
+            // Selecting file
+            File file = fileChooser.getSelectedFile();
+
+            try {
+
+                List<String[]> data;
+                try (
+                    // Load CSV data into a list of string arrays
+                    CSVReader reader = new CSVReader(new FileReader(file))) {
+                    data = reader.readAll();
+                }
+
+                // Convert the list of string arrays to a 2D array for the JTable
+                String[][] dataArray = new String[data.size()][];
+                data.toArray(dataArray);
+
+                // Setting header information on posTable
+                String[] header = {"Product ID", "Product Name", "Purchase Quantity", "Unit Price", "Tax Amount", "Sub Total"};
+
+                // Create a DefaultTableModel with the data and headers
+                DefaultTableModel model = new DefaultTableModel(dataArray, header);
+                posTable.setModel(model);
+
+            } catch (IOException e) {
+                e.getMessage();
+            } catch (CsvException ex) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        total_purchase(); // Calculating total from imported file
+    }//GEN-LAST:event_jLabel53MouseClicked
+
     private void jLabel80MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel80MouseClicked
         // Method to save data from POS table to a file
-        
+
         if (posTable.getRowCount() == 0){
-                    // Displays message to user that there is no data to be saved
-                    JOptionPane.showMessageDialog(rootPane, "Add purchase items before you can save.", "Add to Cart", JOptionPane.INFORMATION_MESSAGE);
+            // Displays message to user that there is no data to be saved
+            JOptionPane.showMessageDialog(rootPane, "Add purchase items before you can save.", "Add to Cart", JOptionPane.INFORMATION_MESSAGE);
         } else{
-            
+
             // Saving data from POS table to a file
             JFileChooser fileChooser =  new JFileChooser();
             int result = fileChooser.showSaveDialog(null);
@@ -4515,7 +4556,7 @@ public class Main_menu extends javax.swing.JFrame {
                     // Warning message to user when about to save a file with the an already existing file name
                     if (selectedFile.exists()) {
                         int option = JOptionPane.showConfirmDialog(null, "The file already exists. Do you want to overwrite it?",
-                                "File Exists", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); // Warning message
+                            "File Exists", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); // Warning message
                         if (option != JOptionPane.YES_OPTION) {
                             return; // User chose not to overwrite, so returns without saving.
                         }
@@ -4542,49 +4583,7 @@ public class Main_menu extends javax.swing.JFrame {
                 }
             }
         }
-
     }//GEN-LAST:event_jLabel80MouseClicked
-
-    private void jLabel53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseClicked
-
-            // Method to load data from a file to JTable
-            
-            JFileChooser fileChooser =  new JFileChooser();
-            int result = fileChooser.showOpenDialog(null);
-            
-            if (result == JFileChooser.APPROVE_OPTION){
-
-                // Selecting file 
-                File file = fileChooser.getSelectedFile();
-                
-                try {
-                    
-                    List<String[]> data;
-                    try ( 
-                        // Load CSV data into a list of string arrays
-                        CSVReader reader = new CSVReader(new FileReader(file))) {
-                        data = reader.readAll();
-                    }
-                    
-                    // Convert the list of string arrays to a 2D array for the JTable
-                    String[][] dataArray = new String[data.size()][];
-                    data.toArray(dataArray);
-                    
-                    // Setting header information on posTable
-                    String[] header = {"Product ID", "Product Name", "Purchase Quantity", "Unit Price", "Tax Amount", "Sub Total"};
-                    
-                    // Create a DefaultTableModel with the data and headers
-                    DefaultTableModel model = new DefaultTableModel(dataArray, header);
-                    posTable.setModel(model);
-                    
-                } catch (IOException e) {
-                    e.getMessage();
-                } catch (CsvException ex) {
-                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            total_purchase(); // Calculating total from imported file
-    }//GEN-LAST:event_jLabel53MouseClicked
 
     /**
      * @param args the command line arguments
