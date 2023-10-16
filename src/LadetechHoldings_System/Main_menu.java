@@ -4497,7 +4497,13 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void jLabel80MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel80MouseClicked
         // Method to save data from POS table to a file
+        
+        if (posTable.getRowCount() == 0){
+                    // Displays message to user that there is no data to be saved
+                    JOptionPane.showMessageDialog(rootPane, "Add purchase items before you can save.", "Add to Cart", JOptionPane.INFORMATION_MESSAGE);
+        } else{
             
+            // Saving data from POS table to a file
             JFileChooser fileChooser =  new JFileChooser();
             int result = fileChooser.showSaveDialog(null);
 
@@ -4535,6 +4541,7 @@ public class Main_menu extends javax.swing.JFrame {
                     System.out.println("Error: " + e.getMessage());
                 }
             }
+        }
 
     }//GEN-LAST:event_jLabel80MouseClicked
 
