@@ -59,10 +59,12 @@ public class Main_menu extends javax.swing.JFrame {
     static int invoiceNo = 0, quotationNo = 0;
     static double countryTax = 0.14;
     
+    boolean saved; // Variable used to track if user has saved current POS sales list
     
 
     /** Creates new form Main_Menu */
     public Main_menu() {
+        this.saved = true;
         initComponents();
         setDate();
         setTime();
@@ -2774,10 +2776,30 @@ public class Main_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeMouseClicked
 
     private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+
+        /* Logging off from POS application */
         
-        dispose(); // Closes Main Menu form
-        log.show(); // Show login form
-        
+        // logs user off from POS system without warning if price list has been saved or no price list has been made
+        if (saved){
+            
+            dispose(); // Closes Main Menu form
+            log.show(); // Show login form
+            
+        } else {
+            
+            // Warning to user when about to log out with out saving current price list
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to close the POS application before saving current "
+                    + "price list?\nClicking \"YES\" will close and erase all POS price list data and log you out.", "Exit", 
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                if (reply == JOptionPane.YES_OPTION) {
+                    dispose(); // Closes Main Menu form
+                    log.show(); // Show login form
+                    
+                } else {
+                    // POS not closed and user is not logged out
+                }
+        }  
     }//GEN-LAST:event_closeMouseClicked
 
     private void homeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMouseEntered
@@ -3527,8 +3549,29 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void jLabel37MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MouseClicked
         
-        dispose(); // Closes POS
-        log.show(); // Show login form
+        /* Logging off from POS application */
+        
+        // logs user off from POS system without warning if price list has been saved or no price list has been made
+        if (saved){
+            
+            dispose(); // Closes Main Menu form
+            log.show(); // Show login form
+            
+        } else {
+            
+            // Warning to user when about to log out with out saving current price list
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to close the POS application before saving current "
+                    + "price list?\nClicking \"YES\" will close and erase all POS price list data and log you out.", "Exit", 
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                if (reply == JOptionPane.YES_OPTION) {
+                    dispose(); // Closes Main Menu form
+                    log.show(); // Show login form
+                    
+                } else {
+                    // POS not closed and user is not logged out
+                }
+        } 
         
     }//GEN-LAST:event_jLabel37MouseClicked
 
@@ -3581,8 +3624,7 @@ public class Main_menu extends javax.swing.JFrame {
             
             String subPrice = String.format("%.2f", subTotal); // Used to round up values to nearest 2 decimal places
             String tax = String.format("%.2f", calculateTax); // Used to round up values to nearest 2 decimal places
-            
-            
+                        
             DefaultTableModel table = (DefaultTableModel) posTable.getModel();
             //int r = 1;
 
@@ -3604,6 +3646,9 @@ public class Main_menu extends javax.swing.JFrame {
             paid.setText("0");
             change.setText("0.00");
             
+            // Reseting boolean value saved when the user has added to the price list being worked on
+            saved = false;
+            
         } else{}
         
         
@@ -3611,8 +3656,8 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
         
+        /* Code to remove a selected item in the POS table */
         
-        // Code to remove a selected item in the POS table
         int rem = posTable.getSelectedRow(); // Get selected row position
         
         // Validation preventing out of bounds error
@@ -3626,10 +3671,13 @@ public class Main_menu extends javax.swing.JFrame {
             pss.posDefault(pos_prodID, prodID_search, avail_quantity, avail_stocks, unit_price, stock_status, change, discount, paid);
             select_prod.setSelectedIndex(0);
             
-        } else{}
-                
-        
-        
+            // Reseting boolean value saved when the user has removed a product from the price list being worked on
+            saved = false;
+            
+        } else{
+            // Do Nothing
+        }     
+     
     }//GEN-LAST:event_jLabel17MouseClicked
 
     private void posTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_posTableMouseClicked
@@ -3787,17 +3835,52 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
 
-        // Clear all the contents/data in the POS table
-        DefaultTableModel model = (DefaultTableModel) posTable.getModel();
-        model.setRowCount(0);
+        /* Clearing all the contents/data in the POS table */
+                       
+        if (!saved){
+            
+            // Warning to user when about to clear unsaved price list
+            int reply = JOptionPane.showConfirmDialog(null, "Current price list has not been saved. Continue?"
+                    + "\nClicking \"YES\" will clear current price listing.", "Refresh", 
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-        // Resetting all other values in the POS screen
-        pss.posDefault(pos_prodID, prodID_search, avail_quantity, avail_stocks, unit_price, stock_status, change, discount, paid);
-        stock_status.setForeground(Color.black);
-        select_prod.setSelectedIndex(0);
-        totalPrice.setText("0.00");
-        qty.setValue(1);
-        vat.setSelected(false);
+                if (reply == JOptionPane.YES_OPTION) {
+                    
+                    DefaultTableModel model = (DefaultTableModel) posTable.getModel();
+                    model.setRowCount(0); // Clearing all rows in POS table
+
+                    // Resetting all other values in the POS screen
+                    pss.posDefault(pos_prodID, prodID_search, avail_quantity, avail_stocks, unit_price, stock_status, change, discount, paid);
+                    stock_status.setForeground(Color.black);
+                    select_prod.setSelectedIndex(0);
+                    totalPrice.setText("0.00");
+                    qty.setValue(1);
+                    vat.setSelected(false);
+                    
+                    saved = true; // Returning boolean value back to default
+                    
+                } else {
+                    // Price list on POS is not cleared/refereshed
+                }
+        
+        // No warning message if price list has been saved
+        } else {
+            
+            DefaultTableModel model = (DefaultTableModel) posTable.getModel();
+            model.setRowCount(0); // Clearing all rows in POS table
+
+            // Resetting all other values in the POS screen
+            pss.posDefault(pos_prodID, prodID_search, avail_quantity, avail_stocks, unit_price, stock_status, change, discount, paid);
+            stock_status.setForeground(Color.black);
+            select_prod.setSelectedIndex(0);
+            totalPrice.setText("0.00");
+            qty.setValue(1);
+            vat.setSelected(false);
+            
+            saved = true; // Returning boolean value back to default
+            
+        }
+
 
     }//GEN-LAST:event_jLabel18MouseClicked
 
@@ -4549,7 +4632,8 @@ public class Main_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel53MouseClicked
 
     private void jLabel80MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel80MouseClicked
-        // Method to save data from POS table to a file
+
+        /* Method to save data from POS table to a file */
 
         if (posTable.getRowCount() == 0){
             // Displays message to user that there is no data to be saved
@@ -4587,8 +4671,12 @@ public class Main_menu extends javax.swing.JFrame {
                         }
                         writer.close();
                     }
+                    
                     // Displays file saved message to user
-                    JOptionPane.showMessageDialog(rootPane, "File saved Successfully.", "File Saved.", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(rootPane, "File saved Successfully.", "File Saved.",JOptionPane.INFORMATION_MESSAGE);
+                    
+                    // Updating Boolean value saved for when the user has saved the price list being worked on
+                    saved = true;
 
                 } catch (IOException e) {
                     System.out.println("Error: " + e.getMessage());
