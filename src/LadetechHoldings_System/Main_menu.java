@@ -25,6 +25,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import java.io.FileReader;
 import java.util.List;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -76,6 +77,26 @@ public class Main_menu extends javax.swing.JFrame {
         settings_usrName.setText(login.user_name); // Setting username of logged in user in settings screen
         user_type = login.user_type; // Setting user priviledge status
     }
+    
+    
+    // Log file message processing class
+    public static class MyLogger {
+        
+        private final Logger LOGGER = Logger.getLogger(MyLogger.class.getName());
+        
+        public void log(String message) throws IOException {
+            
+            String desktopPath  = System.getProperty("user.home") + "/Desktop"; // Getting path to desktop
+            String logPath = desktopPath + "\\POS Log\\POS_Sys.log"; // Path of log file
+            
+            FileHandler handler = new FileHandler(logPath, true); // appends new log messages to "logPath" with boolean value "true"
+            LOGGER.addHandler(handler);
+            LOGGER.info(message);
+        }
+    }
+    MyLogger logMessage = new MyLogger(); // Used to access MyLogger class
+    
+    
     
     // Setting date 
     public final void setDate() {

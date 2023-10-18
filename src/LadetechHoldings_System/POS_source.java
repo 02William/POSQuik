@@ -22,8 +22,8 @@ public class POS_source {
         try {
             
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ladetech_pos_db", "root", ""); // Local Test Connection
-//            con = DriverManager.getConnection("jdbc:mysql://192.168.1.100:3306/ladetech_pos_db", "ladetech_usr", "23|@detechP@@s"); // Local Test Connection on site
+//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ladetech_pos_db", "root", ""); // Local Test Connection
+            con = DriverManager.getConnection("jdbc:mysql://192.168.1.100:3306/ladetech_pos_db", "ladetech_usr", "23|@detechP@@s"); // Local Test Connection on site
 //            con = DriverManager.getConnection("jdbc:mysql://---:--/ladetech_pos_db", "ladetech_usr", "23|@detechP@@s"); // Remote Connection (Not Working)
             return con;
 

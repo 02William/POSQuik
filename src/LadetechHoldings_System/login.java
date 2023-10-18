@@ -1,9 +1,11 @@
 package LadetechHoldings_System;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,6 +27,23 @@ public class login extends javax.swing.JFrame {
     public login() {
         initComponents();
     }
+    
+    // Log file message processing class
+    public static class MyLogger {
+        
+        private final Logger LOGGER = Logger.getLogger(MyLogger.class.getName());
+        
+        public void log(String message) throws IOException {
+            
+            String desktopPath  = System.getProperty("user.home") + "/Desktop"; // Getting path to desktop
+            String logPath = desktopPath + "\\POS Log\\POS_Sys.log"; // Path of log file
+            
+            FileHandler handler = new FileHandler(logPath, true); // appends new log messages to "logPath" with boolean value "true"
+            LOGGER.addHandler(handler);
+            LOGGER.info(message);
+        }
+    }
+    MyLogger logMessage = new MyLogger(); // Used to access MyLogger class
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -360,9 +379,11 @@ public class login extends javax.swing.JFrame {
                     user_name = (rs.getString("user_name"));
                     user_type = (rs.getString("user_type"));
 
+                    logMessage.log("Before Main_menu u ... - Initialization");
                     Main_menu menu = new Main_menu();
                     dispose(); // Stop screen from taking memory in background...window completely terminated
                     menu.show(); // Bring up main menu window
+                    logMessage.log ("After Main_menu ... - display main menu");
 
                 } else {
                     JOptionPane.showMessageDialog(null, "User ID or Password is incorrect.", "Login Error", JOptionPane.ERROR_MESSAGE);
@@ -370,7 +391,7 @@ public class login extends javax.swing.JFrame {
             
             }catch(SQLException ex){
                 System.out.println(ex.getMessage());          
-            } catch (InterruptedException ex) {
+            } catch (InterruptedException | IOException ex) {
                 Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);    
             } catch (NullPointerException ex){
                 System.out.println(ex);
