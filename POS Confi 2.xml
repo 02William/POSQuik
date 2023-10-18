@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
-  <headerType>gui</headerType>
+  <headerType>console</headerType>
   <jar>C:\Users\WILLIAM OMOLADE\Documents\NetBeansProjects\InventorySystem\dist\InventorySystem.jar</jar>
   <outfile>C:\Users\WILLIAM OMOLADE\Desktop\POS Inventory System.exe</outfile>
   <errTitle></errTitle>

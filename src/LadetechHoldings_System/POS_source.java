@@ -17,8 +17,7 @@ import javax.swing.JTextField;
 public class POS_source {
     
     public static Connection mycon() {
-        
-        Connection con = null;
+                Connection con = null;
         
         try {
             
