@@ -61,8 +61,9 @@ public class Main_menu extends javax.swing.JFrame {
     boolean saved; // Variable used to track if user has saved current POS sales list
     
 
-    /** Creates new form Main_Menu */
-    public Main_menu() {
+    /** Creates new form Main_Menu
+     * @throws java.io.IOException */
+    public Main_menu() throws IOException {
         this.saved = true;
         initComponents();
         setDate();
@@ -118,7 +119,7 @@ public class Main_menu extends javax.swing.JFrame {
     }
     
     // Populatinng inventory list with data from database
-    private void inventoryList(){
+    private void inventoryList() throws IOException{
         
         try {
             
@@ -132,11 +133,12 @@ public class Main_menu extends javax.swing.JFrame {
             
         } catch (SQLException e){
             System.out.println(e.getMessage());
+            logMessage.log("SQLException: " + e.getMessage());
         }        
     }
     
     // Populatinng user list with data from database
-    private void userList(){
+    private void userList() throws IOException{
         
         try {
             
@@ -150,6 +152,7 @@ public class Main_menu extends javax.swing.JFrame {
             
         } catch (SQLException e){
             System.out.println(e.getMessage());
+            logMessage.log("SQLException: " + e.getMessage());
         }        
     }
     
@@ -209,7 +212,7 @@ public class Main_menu extends javax.swing.JFrame {
     return (DefaultTableModel) table.getModel(); // Cast the table model to DefaultTableModel and return it
 }
     //Collecting company data from database - which can only be modiified by the administrator 
-    private void load_companyData(){
+    private void load_companyData() throws IOException{
         
         try {
                 String query = ("SELECT * FROM `company_data`");
@@ -236,6 +239,7 @@ public class Main_menu extends javax.swing.JFrame {
 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
+                logMessage.log("SQLException: " + ex.getMessage());
             }
     }
     
@@ -3127,6 +3131,11 @@ public class Main_menu extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            try {
+                logMessage.log("SQLException: " + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }//GEN-LAST:event_showAll_inventoryMouseClicked
 
@@ -3168,6 +3177,11 @@ public class Main_menu extends javax.swing.JFrame {
             }
         } catch (HeadlessException | SQLException x) {
             System.out.println(x.getMessage());
+            try {
+                logMessage.log("HeadlessException | SQLException: " + x.getMessage());
+            } catch (IOException ex) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }//GEN-LAST:event_delete_toolsMouseClicked
@@ -3203,6 +3217,12 @@ public class Main_menu extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
             // Update unscuccessful message displayed to user
             JOptionPane.showMessageDialog(null, "Update unscuccessful. Check all input fields.");
+            try {
+                logMessage.log("HeadlessException | SQLException: " + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            
         }
         
     }//GEN-LAST:event_update_toolsMouseClicked
@@ -3237,6 +3257,11 @@ public class Main_menu extends javax.swing.JFrame {
             System.out.println(ex);
             // Update unscuccessful message displayed to user
             JOptionPane.showMessageDialog(null, "Update unscuccessful. Check all input fields.");
+            try {
+                logMessage.log("HeadlessException | SQLException: " + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }      
     }//GEN-LAST:event_update_inventoryMouseClicked
 
@@ -3276,6 +3301,11 @@ public class Main_menu extends javax.swing.JFrame {
             }
         } catch (HeadlessException | SQLException x) {
             System.out.println(x.getMessage());
+            try {
+                logMessage.log("HeadlessException | SQLException: " + x.getMessage());
+            } catch (IOException ex) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_delete_inventoryMouseClicked
 
@@ -3334,6 +3364,11 @@ public class Main_menu extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            try {
+                logMessage.log("SQLException: " + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }//GEN-LAST:event_search_inventoryKeyReleased
 
@@ -3356,6 +3391,11 @@ public class Main_menu extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            try {
+                logMessage.log("SQLException: " + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }        
     }//GEN-LAST:event_show_toolsMouseClicked
 
@@ -3434,6 +3474,11 @@ public class Main_menu extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            try {
+                logMessage.log("SQLException: " + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }    
     }//GEN-LAST:event_search_toolsKeyReleased
 
@@ -3486,6 +3531,11 @@ public class Main_menu extends javax.swing.JFrame {
 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
+                try {
+                    logMessage.log("SQLException: " + ex.getMessage());
+                } catch (IOException ex1) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
             
             // Settings stock status information on POS screen
@@ -3626,6 +3676,11 @@ public class Main_menu extends javax.swing.JFrame {
          
          } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
+             try {
+                 logMessage.log("SQLException: " + ex.getMessage());
+             } catch (IOException ex1) {
+                 Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+             }
          }
         
     }//GEN-LAST:event_jLabel33MouseClicked
@@ -3647,6 +3702,7 @@ public class Main_menu extends javax.swing.JFrame {
             DefaultTableModel table = (DefaultTableModel) posTable.getModel();
             //int r = 1;
 
+            @SuppressWarnings("UseOfObsoleteCollectionType")
             Vector v = new Vector();
 
             // Adding values to table in POS (goods to be purchased)
@@ -3725,6 +3781,11 @@ public class Main_menu extends javax.swing.JFrame {
 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
+            try {
+                logMessage.log("SQLException: " + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             }
         
     }//GEN-LAST:event_posTableMouseClicked
@@ -3772,7 +3833,13 @@ public class Main_menu extends javax.swing.JFrame {
             
             try {
                 payment = Double.valueOf(paid.getText()); // Getting amount being paid by customer from POS system and converting to a Double variable.
-            } catch (NumberFormatException e){}    
+            } catch (NumberFormatException e){
+                try {
+                    logMessage.log("NumberFormatException: " + e.getMessage());
+                } catch (IOException ex) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }    
                 
             CustomerChange = totalCost - payment; // Calculating the difference (change) from the total cost and amount being paid by customer.
             String cc = String.format("%.2f", Math.abs(CustomerChange)); // Formating change to 2 decimal places ("%.2f") and remvoing minus sign with ( Math.abs() ) method.
@@ -3816,7 +3883,13 @@ public class Main_menu extends javax.swing.JFrame {
             
             try{
                 POS_Discount = Double.valueOf(discount.getText()); // Getting amount being discounted for the customer from POS system and converting to a Double variable.
-            } catch (NumberFormatException e){}
+            } catch (NumberFormatException e){
+                try {
+                    logMessage.log("NumberFormatException: " + e.getMessage());
+                } catch (IOException ex) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             
             CustomerDiscount = totalCost - POS_Discount; // Calculating the difference (discount) from the total cost and amount being discounted for the customer.
             String cd = String.format("%.2f", Math.abs(CustomerDiscount)); // Formating change to 2 decimal places ("%.2f") and remvoing minus sign with ( Math.abs() ) method.
@@ -3932,6 +4005,11 @@ public class Main_menu extends javax.swing.JFrame {
 
                 } catch (SQLException ex) {
                     System.out.println(ex.getMessage());
+                    try {
+                        logMessage.log("SQLException: " + ex.getMessage());
+                    } catch (IOException ex1) {
+                        Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
                 }
 
                 // check if purchase quantity is greater than availavble stock
@@ -3984,6 +4062,11 @@ public class Main_menu extends javax.swing.JFrame {
 
                         } catch (SQLException ex) {
                             System.out.println(ex.getMessage());
+                            try {
+                                logMessage.log("SQLException: " + ex.getMessage());
+                            } catch (IOException ex1) {
+                                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                            }
                         }
 
 
@@ -3996,6 +4079,11 @@ public class Main_menu extends javax.swing.JFrame {
 
                          }catch (SQLException ex) {
                             System.out.println("SQL Exception error: " + ex);
+                            try {
+                                logMessage.log("SQLException: " + ex.getMessage());
+                            } catch (IOException ex1) {
+                                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                            }
                          }   
 
                     }
@@ -4094,6 +4182,11 @@ public class Main_menu extends javax.swing.JFrame {
                                                        
                         }catch (SQLException ex){
                             System.out.println(ex.getMessage());
+                            try {
+                                logMessage.log("SQLException: " + ex.getMessage());
+                            } catch (IOException ex1) {
+                                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                            }
                         }
                         
                     } else {
@@ -4114,6 +4207,11 @@ public class Main_menu extends javax.swing.JFrame {
         } catch (NullPointerException ex){
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Error updating password. Please try again later.", "Failed", JOptionPane.ERROR_MESSAGE);
+            try {
+                logMessage.log("NullPointerException: " + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }             
     }//GEN-LAST:event_jLabel46MouseClicked
 
@@ -4184,6 +4282,11 @@ public class Main_menu extends javax.swing.JFrame {
 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
+                try {
+                    logMessage.log("SQLException: " + ex.getMessage());
+                } catch (IOException ex1) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
     }//GEN-LAST:event_jLabel73MouseClicked
 
@@ -4209,6 +4312,11 @@ public class Main_menu extends javax.swing.JFrame {
 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
+                try {
+                    logMessage.log("SQLException: " + ex.getMessage());
+                } catch (IOException ex1) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
             
             if (selected_user.equals("Select a Product")){
@@ -4243,6 +4351,11 @@ public class Main_menu extends javax.swing.JFrame {
 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
+                try {
+                    logMessage.log("SQLException: " + ex.getMessage());
+                } catch (IOException ex1) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
             
             if (selected_user.equals("Select a User")){
@@ -4291,8 +4404,20 @@ public class Main_menu extends javax.swing.JFrame {
         } catch (HeadlessException | SQLException ex) {
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Update unscuccessful. Check all input fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            try {
+                logMessage.log("HeadlessException | SQLException: " + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } catch (NumberFormatException ex){
             JOptionPane.showMessageDialog(null, "Update unscuccessful. Only input numeric values in \"Tax Rate (%)\" field", "Error", JOptionPane.ERROR_MESSAGE);
+            try {
+                logMessage.log("NumberFormatException: " + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jLabel71MouseClicked
 
@@ -4327,6 +4452,11 @@ public class Main_menu extends javax.swing.JFrame {
             }
         } catch (HeadlessException | SQLException x) {
             System.out.println(x.getMessage());
+            try {
+                logMessage.log("HeadlessException | SQLException: " + x.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }//GEN-LAST:event_jLabel69MouseClicked
 
@@ -4403,7 +4533,11 @@ public class Main_menu extends javax.swing.JFrame {
                     + "to your server else, contact the developer.",
                 "Input Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error" + ex.getMessage());
-
+            try {
+                logMessage.log("SQLException" + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }//GEN-LAST:event_jLabel70MouseClicked
 
@@ -4480,7 +4614,11 @@ public class Main_menu extends javax.swing.JFrame {
 //                    + "to your server else, contact the developer.",
 //                "Input Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error" + ex.getMessage());
-
+            try {
+                logMessage.log("SQLException" + ex.getMessage());
+            } catch (IOException ex1) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }//GEN-LAST:event_jLabel79MouseClicked
 
@@ -4642,9 +4780,18 @@ public class Main_menu extends javax.swing.JFrame {
                 posTable.setModel(model);
 
             } catch (IOException e) {
-                e.getMessage();
+                try {
+                    logMessage.log("IOException: " + e.getMessage());
+                } catch (IOException ex) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } catch (CsvException ex) {
                 Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    logMessage.log("CsvException: " + ex.getMessage());
+                } catch (IOException ex1) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
         }
         total_purchase(); // Calculating total from imported file
@@ -4699,6 +4846,11 @@ public class Main_menu extends javax.swing.JFrame {
 
                 } catch (IOException e) {
                     System.out.println("Error: " + e.getMessage());
+                    try {
+                        logMessage.log("IOException: " + e.getMessage());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }
@@ -4747,7 +4899,11 @@ public class Main_menu extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Main_menu().setVisible(true);
+            try {
+                new Main_menu().setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
