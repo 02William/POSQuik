@@ -25,10 +25,12 @@ public class loadscreen extends javax.swing.JFrame {
         // Seting the the path for the folders
         String folderPath1 = desktopPath + "\\Invoice's";
         String folderPath2 = desktopPath + "\\Quotation's";
+        String folderPath3 = desktopPath + "\\POS Log";
         
         // Create file objects for the folders
         File invoiceFolder = new File(folderPath1);
         File quotationFolder = new File(folderPath2);
+        File logFolder = new File(folderPath3);
         
         // Check if the folders exist and create them if they don't
         if (!invoiceFolder.exists()) {
@@ -57,6 +59,20 @@ public class loadscreen extends javax.swing.JFrame {
             
         } else {
             System.out.println("Quotation folder already exists.");
+        }
+        
+        if (!logFolder.exists()) {
+            
+            boolean created = logFolder.mkdirs();
+            
+            if (created) {
+                System.out.println("Log folder created successfully.");
+            } else {
+                System.out.println("Failed to create folder for log files.");
+            }
+            
+        } else {
+            System.out.println("Pos log folder already exists.");
         }
 }
     

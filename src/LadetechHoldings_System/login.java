@@ -379,11 +379,9 @@ public class login extends javax.swing.JFrame {
                     user_name = (rs.getString("user_name"));
                     user_type = (rs.getString("user_type"));
 
-                    logMessage.log("Before Main_menu u ... - Initialization");
                     Main_menu menu = new Main_menu();
                     dispose(); // Stop screen from taking memory in background...window completely terminated
                     menu.show(); // Bring up main menu window
-                    logMessage.log ("After Main_menu ... - display main menu");
 
                 } else {
                     JOptionPane.showMessageDialog(null, "User ID or Password is incorrect.", "Login Error", JOptionPane.ERROR_MESSAGE);
