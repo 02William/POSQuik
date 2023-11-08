@@ -2812,7 +2812,7 @@ public class Main_menu extends javax.swing.JFrame {
             
             // Warning to user when about to log out with out saving current price list
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to close the POS application before saving current "
-                    + "price list?\nClicking \"YES\" will close and erase all POS price list data and log you out.", "Exit", 
+                    + "price list?\nClicking \"YES\" will close and erase all POS price list data and log you out.", "Exit Without Saving?", 
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
                 if (reply == JOptionPane.YES_OPTION) {
@@ -3630,7 +3630,7 @@ public class Main_menu extends javax.swing.JFrame {
             
             // Warning to user when about to log out with out saving current price list
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to close the POS application before saving current "
-                    + "price list?\nClicking \"YES\" will close and erase all POS price list data and log you out.", "Exit", 
+                    + "price list?\nClicking \"YES\" will close and erase all POS price list data and log you out.", "Exit Without Saving?", 
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
                 if (reply == JOptionPane.YES_OPTION) {
