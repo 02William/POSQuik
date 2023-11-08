@@ -4544,9 +4544,15 @@ public class Main_menu extends javax.swing.JFrame {
     private void jLabel79MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel79MouseClicked
          // Updating user data on database
         
-          try {
+        try {
+            
+            if (userID_search.getText().isEmpty() || select_user.getSelectedItem().equals("Select a User")) {
 
-            if (userID.getText().isEmpty() || userPass.getText().isEmpty() || userName.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Select / Search a user you want to update.", "Update User", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+            
+            else if (userID.getText().isEmpty() || userPass.getText().isEmpty() || userName.getText().isEmpty()) {
 
                 JOptionPane.showMessageDialog(rootPane, "Please make sure all fields under \"User Data\" have been filled.",
                     "Fill In All Fileds", JOptionPane.INFORMATION_MESSAGE);
