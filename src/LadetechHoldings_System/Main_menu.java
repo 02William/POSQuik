@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import java.io.FileReader;
+import static java.lang.Double.parseDouble;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -975,7 +976,7 @@ public class Main_menu extends javax.swing.JFrame {
         avail_stocks.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         avail_stocks.setForeground(new java.awt.Color(255, 255, 255));
         avail_stocks.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        avail_stocks.setText("0");
+        avail_stocks.setText("0.0");
         jPanel6.add(avail_stocks, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 157, -1));
 
         select_prod.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
@@ -1227,7 +1228,7 @@ public class Main_menu extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("Sale");
+        jLabel16.setText("Invoice");
         jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel16MouseClicked(evt);
@@ -1463,7 +1464,7 @@ public class Main_menu extends javax.swing.JFrame {
         jPanel30.add(unit_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 118, 113, -1));
 
         avail_quantity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        avail_quantity.setText("0");
+        avail_quantity.setText("0.0");
         jPanel30.add(avail_quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 146, 113, -1));
 
         pos_prodID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1549,7 +1550,7 @@ public class Main_menu extends javax.swing.JFrame {
                         .addComponent(logo6)
                         .addComponent(search_inventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(logo5))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jPanel14.setBackground(new java.awt.Color(204, 204, 204));
@@ -1913,7 +1914,7 @@ public class Main_menu extends javax.swing.JFrame {
                         .addComponent(logo4)
                         .addComponent(search_tools, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(logo3))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
@@ -3540,7 +3541,7 @@ public class Main_menu extends javax.swing.JFrame {
             
             // Settings stock status information on POS screen
             
-            int stock = Integer.parseInt(avail_quantity.getText());
+            double stock = parseDouble(avail_quantity.getText());
             
             if (stock >= 100){
                 stock_status.setText("HIGH");
@@ -3745,6 +3746,7 @@ public class Main_menu extends javax.swing.JFrame {
             // Reset values to default when a selection is deleted
             pss.posDefault(pos_prodID, prodID_search, avail_quantity, avail_stocks, unit_price, stock_status, change, discount, paid);
             select_prod.setSelectedIndex(0);
+            stock_status.setForeground(Color.black);
             
             // Reseting boolean value saved when the user has removed a product from the price list being worked on
             saved = false;
@@ -3990,7 +3992,7 @@ public class Main_menu extends javax.swing.JFrame {
                 String productID = (String) posTable.getValueAt(i, posTable.getColumnModel().getColumnIndex("Product ID"));
                 String PurchaseQty = (String) posTable.getValueAt(i, posTable.getColumnModel().getColumnIndex("Purchase Quantity"));
                 String ProductName = (String) posTable.getValueAt(i, posTable.getColumnModel().getColumnIndex("Product Name"));
-                int stockLevel = 0; // Stock level from the database
+                double stockLevel = 0.0; // Stock level from the database
 
                 // Statement to collect stock level data from the database
                 try {
@@ -3999,7 +4001,7 @@ public class Main_menu extends javax.swing.JFrame {
                     rs = state.executeQuery("Select stock_level from inventory_data where product_id =  '" + productID + "'");   
 
                     if (rs.next()) {
-                        stockLevel = Integer.parseInt(rs.getString("stock_level"));
+                        stockLevel = parseDouble(rs.getString("stock_level"));
                     }
 
 
@@ -4013,7 +4015,7 @@ public class Main_menu extends javax.swing.JFrame {
                 }
 
                 // check if purchase quantity is greater than availavble stock
-                if (Integer.parseInt(PurchaseQty) > stockLevel){
+                if (parseDouble(PurchaseQty) > stockLevel){
 
                     error = true;
                     JOptionPane.showMessageDialog(null, "Quantity selected for " + ProductName + " (" + PurchaseQty + ") is more than available stock (" 
@@ -4023,7 +4025,7 @@ public class Main_menu extends javax.swing.JFrame {
                 }
             }
 
-            // check if there was an error with available stock level and purchase quantity or not
+            // check if there was an error with available stock level and purchase quantity 
             // If there is no error the invoice pdf can be genereated
             if (!error) {
 
@@ -4047,7 +4049,7 @@ public class Main_menu extends javax.swing.JFrame {
                         // Geeting data from the POS table
                         String productID = (String) posTable.getValueAt(i, posTable.getColumnModel().getColumnIndex("Product ID"));
                         String PurchaseQty = (String) posTable.getValueAt(i, posTable.getColumnModel().getColumnIndex("Purchase Quantity"));
-                        int stockLevel = 0; // Stock level from the database
+                        double stockLevel = 0.0; // Stock level from the database
 
                         // Statement to collect stock level data from the database
                         try {
@@ -4056,7 +4058,7 @@ public class Main_menu extends javax.swing.JFrame {
                             rs = state.executeQuery("Select stock_level from inventory_data where product_id =  '" + productID + "'");   
 
                             if (rs.next()) {
-                                stockLevel = Integer.parseInt(rs.getString("stock_level"));
+                                stockLevel = parseDouble(rs.getString("stock_level"));
                             }
 
 
@@ -4070,7 +4072,7 @@ public class Main_menu extends javax.swing.JFrame {
                         }
 
 
-                        int newStockLevel = stockLevel - Integer.parseInt(PurchaseQty);
+                        double newStockLevel = stockLevel - parseDouble(PurchaseQty);
 
                          try {
 
@@ -4755,52 +4757,121 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void jLabel53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseClicked
 
-        // Method to load data from a file to JTable
+        /* Method to load data from a file to JTable */
 
-        JFileChooser fileChooser =  new JFileChooser();
-        int result = fileChooser.showOpenDialog(null);
+                
+        /* initiates import of new file process without warning if the price list has been saved or no price list has been made */
+        
+        if (saved){
+            
+            JFileChooser fileChooser =  new JFileChooser(); // Creating a file chooser object
+            int result = fileChooser.showOpenDialog(null);
+            
+            if (result == JFileChooser.APPROVE_OPTION){
 
-        if (result == JFileChooser.APPROVE_OPTION){
+                // Selecting file
+                File file = fileChooser.getSelectedFile();
 
-            // Selecting file
-            File file = fileChooser.getSelectedFile();
-
-            try {
-
-                List<String[]> data;
-                try (
-                    // Load CSV data into a list of string arrays
-                    CSVReader reader = new CSVReader(new FileReader(file))) {
-                    data = reader.readAll();
-                }
-
-                // Convert the list of string arrays to a 2D array for the JTable
-                String[][] dataArray = new String[data.size()][];
-                data.toArray(dataArray);
-
-                // Setting header information on posTable
-                String[] header = {"Product ID", "Product Name", "Purchase Quantity", "Unit Price", "Tax Amount", "Sub Total"};
-
-                // Create a DefaultTableModel with the data and headers
-                DefaultTableModel model = new DefaultTableModel(dataArray, header);
-                posTable.setModel(model);
-
-            } catch (IOException e) {
                 try {
-                    logMessage.log("IOException: " + e.getMessage());
-                } catch (IOException ex) {
+
+                    List<String[]> data;
+                    try (
+                        // Load CSV data into a list of string arrays
+                        CSVReader reader = new CSVReader(new FileReader(file))) {
+                        data = reader.readAll();
+                    }
+
+                    // Convert the list of string arrays to a 2D array for the JTable
+                    String[][] dataArray = new String[data.size()][];
+                    data.toArray(dataArray);
+
+                    // Setting header information on posTable
+                    String[] header = {"Product ID", "Product Name", "Purchase Quantity", "Unit Price", "Tax Amount", "Sub Total"};
+
+                    // Create a DefaultTableModel with the data and headers
+                    DefaultTableModel model = new DefaultTableModel(dataArray, header);
+                    posTable.setModel(model);
+
+                } catch (IOException e) {
+                    try {
+                        logMessage.log("IOException: " + e.getMessage());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } catch (CsvException ex) {
                     Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (CsvException ex) {
-                Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
-                try {
-                    logMessage.log("CsvException: " + ex.getMessage());
-                } catch (IOException ex1) {
-                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                    try {
+                        logMessage.log("CsvException: " + ex.getMessage());
+                    } catch (IOException ex1) {
+                        Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
                 }
             }
+            
+            total_purchase(); // Calculating total from imported file
+        
+        /* Warns user of importing new file when the current price list on the screen has not been saved */
+            
+        } else {
+            
+            // Warning to user when about to import a new file without saving current price list
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to import a new file before saving current price list?"
+                    + "\nClicking \"YES\" will erase exisitng POS price list on the screen after you import.", "Import Without Saving?", 
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+            if (reply == JOptionPane.YES_OPTION) {
+                
+                JFileChooser fileChooser =  new JFileChooser(); // Creating a file chooser object
+                int result = fileChooser.showOpenDialog(null);
+                
+                if (result == JFileChooser.APPROVE_OPTION){
+
+                    // Selecting file
+                    File file = fileChooser.getSelectedFile();
+
+                    try {
+
+                        List<String[]> data;
+                        try (
+                            // Load CSV data into a list of string arrays
+                            CSVReader reader = new CSVReader(new FileReader(file))) {
+                            data = reader.readAll();
+                        }
+
+                        // Convert the list of string arrays to a 2D array for the JTable
+                        String[][] dataArray = new String[data.size()][];
+                        data.toArray(dataArray);
+
+                        // Setting header information on posTable
+                        String[] header = {"Product ID", "Product Name", "Purchase Quantity", "Unit Price", "Tax Amount", "Sub Total"};
+
+                        // Create a DefaultTableModel with the data and headers
+                        DefaultTableModel model = new DefaultTableModel(dataArray, header);
+                        posTable.setModel(model);
+
+                    } catch (IOException e) {
+                        try {
+                            logMessage.log("IOException: " + e.getMessage());
+                        } catch (IOException ex) {
+                            Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } catch (CsvException ex) {
+                        Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+                        try {
+                            logMessage.log("CsvException: " + ex.getMessage());
+                        } catch (IOException ex1) {
+                            Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                        }
+                    }
+                }
+                
+                total_purchase(); // Calculating total from imported file
+                    
+                } else {
+                    // File not imported
+                }
         }
-        total_purchase(); // Calculating total from imported file
+        
     }//GEN-LAST:event_jLabel53MouseClicked
 
     private void jLabel80MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel80MouseClicked
