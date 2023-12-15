@@ -281,6 +281,7 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userIDActionPerformed"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="userIDKeyPressed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel4">
@@ -316,6 +317,9 @@
                       <Dimension value="[227, 24]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="passwordKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="jCheckBox1">
                   <Properties>

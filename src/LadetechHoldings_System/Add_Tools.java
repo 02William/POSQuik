@@ -66,8 +66,8 @@ public class Add_Tools extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Tool / Machine Name:");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel1.setText("* Tool / Machine Name:");
 
         tool_name.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         tool_name.addActionListener(new java.awt.event.ActionListener() {
@@ -76,7 +76,7 @@ public class Add_Tools extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel2.setText("In Possesion of:");
 
         tool_possession.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
@@ -86,8 +86,8 @@ public class Add_Tools extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Quantity:");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel3.setText("* Quantity:");
 
         quantity.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         quantity.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +96,7 @@ public class Add_Tools extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel4.setText("Details / Location:");
 
         tool_details.setColumns(20);
@@ -202,7 +202,7 @@ public class Add_Tools extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tool_possession)
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 15, Short.MAX_VALUE))))
+                        .addGap(0, 14, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(250, 250, 250)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

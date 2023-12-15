@@ -67,8 +67,8 @@ public class Add_inventory extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Product Name:");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel1.setText("* Product Name:");
 
         product_name.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         product_name.addActionListener(new java.awt.event.ActionListener() {
@@ -77,8 +77,8 @@ public class Add_inventory extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Price (P):");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel2.setText("* Price (P):");
 
         price.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         price.addActionListener(new java.awt.event.ActionListener() {
@@ -87,8 +87,8 @@ public class Add_inventory extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Stock Level:");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel3.setText("* Stock Level:");
 
         stock_level.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         stock_level.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +97,7 @@ public class Add_inventory extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel4.setText("Description:");
 
         inventory_descr.setColumns(20);
@@ -209,7 +209,7 @@ public class Add_inventory extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(price)
                                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 15, Short.MAX_VALUE))))
+                        .addGap(0, 16, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(200, 200, 200)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

@@ -23,6 +23,7 @@ import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import java.awt.event.KeyEvent;
 import java.io.FileReader;
 import static java.lang.Double.parseDouble;
 import java.util.List;
@@ -196,14 +197,7 @@ public class Main_menu extends javax.swing.JFrame {
         posNoVatTotal = price; 
         
     }
-    
-//    public Object posCellValue (int i, int j){
-//        
-//        Object val = posTable.getValueAt(i, j);
-//        return val;
-//        
-//    }
-    
+        
     public static JTable getJTable() {
     return posTable; // Assuming that posTable is the JTable object in your Main_menu class
 }
@@ -932,6 +926,11 @@ public class Main_menu extends javax.swing.JFrame {
         jPanel6.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
         prodID_search.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        prodID_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                prodID_searchKeyPressed(evt);
+            }
+        });
         jPanel6.add(prodID_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 150, 25));
 
         qty.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
@@ -2395,6 +2394,11 @@ public class Main_menu extends javax.swing.JFrame {
         admin_settings.add(select_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 85, 278, -1));
 
         userID_search.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        userID_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                userID_searchKeyPressed(evt);
+            }
+        });
         admin_settings.add(userID_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 123, 165, -1));
 
         jPanel28.setBackground(new java.awt.Color(102, 102, 102));
@@ -3707,7 +3711,7 @@ public class Main_menu extends javax.swing.JFrame {
             Vector v = new Vector();
 
             // Adding values to table in POS (goods to be purchased)
-            v.add(prodID_search.getText());
+            v.add(pos_prodID.getText());
             v.add(select_prod.getSelectedItem().toString());
             v.add(qty.getValue().toString());
             v.add(unit_price.getText());
@@ -3721,6 +3725,7 @@ public class Main_menu extends javax.swing.JFrame {
             discount.setText("0");
             paid.setText("0");
             change.setText("0.00");
+            vat.setSelected(false);
             
             // Reseting boolean value saved when the user has added to the price list being worked on
             saved = false;
@@ -3809,7 +3814,7 @@ public class Main_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeMouseExited
 
     private void paidKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paidKeyPressed
-        //Clear text to add amount being paid by customer
+        // Clear text to add amount being paid by customer
         if (paid.getText().equals("0")) {
             paid.setText("");
         }
@@ -3817,7 +3822,7 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void paidKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paidKeyReleased
 
-        //Sets POS values to "0" if nothing has been added to the cart
+        // Sets POS values to "0" if nothing has been added to the cart
         if (totalPrice.getText().equals("0.00") || totalPrice.getText().isEmpty()) {
             
             discount.setText("0");
@@ -3858,7 +3863,7 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void discountKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_discountKeyPressed
         
-        //Clear text to add discount for customer
+        // Clear text to add discount for customer
         if (discount.getText().equals("0")) {
             discount.setText("");
         }
@@ -3867,7 +3872,7 @@ public class Main_menu extends javax.swing.JFrame {
 
     private void discountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_discountKeyReleased
        
-        //Sets POS values to "0" if nothing has been added to the cart
+        // Sets POS values to "0" if nothing has been added to the cart
         if (totalPrice.getText().equals("0.00")/* || totalPrice.getText().isEmpty()*/) {
             
             discount.setText("0");
@@ -3877,27 +3882,63 @@ public class Main_menu extends javax.swing.JFrame {
         }
         else {
 
-            // Calculating discount for customer
-            total_purchase();
-            Double CustomerDiscount;
-            Double POS_Discount = 0.0;
-            Double totalCost = Double.valueOf(totalPrice.getText()); // Getting total price value from POS system and converting to a Double variable.
+            /* Calculating discount for customer */
             
-            try{
-                POS_Discount = Double.valueOf(discount.getText()); // Getting amount being discounted for the customer from POS system and converting to a Double variable.
-            } catch (NumberFormatException e){
-                try {
-                    logMessage.log("NumberFormatException: " + e.getMessage());
-                } catch (IOException ex) {
-                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+            
+            // Discount when VAT checkbox is active (Discounted price without VAT)
+            if(vat.isSelected()){
+                
+                noVAT_purchase(); // Recalculating total cost without VAT
+                Double CustomerDiscount; // Used in calculating difference between total price without vat and discount from POS
+                Double POS_Discount = 0.0; // Declared and initialized variable used to get discount value from POS
+                
+                Double price = Double.valueOf(posNoVatTotal); // Converting global variable posNoVatTotal to double to use for discount calculation
+                
+                // Try-catch block to catch potential numberFormatException when getting discount from POS
+                try{
+                    POS_Discount = Double.valueOf(discount.getText()); // Getting amount being discounted for the customer from POS system and converting to a Double variable.
+                } catch (NumberFormatException e){
+                    try {
+                        logMessage.log("NumberFormatException: " + e.getMessage());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+                
+                CustomerDiscount = price - POS_Discount; // Calculating the difference (discount) from the total cost and amount being discounted for the customer.
+                String cd = String.format("%.2f", Math.abs(CustomerDiscount)); // Formating change to 2 decimal places ("%.2f") and remvoing minus sign with ( Math.abs() ) method.
+
+                totalPrice.setText(String.valueOf(cd)); // Displaying discounted total in POS
+                
             }
             
-            CustomerDiscount = totalCost - POS_Discount; // Calculating the difference (discount) from the total cost and amount being discounted for the customer.
-            String cd = String.format("%.2f", Math.abs(CustomerDiscount)); // Formating change to 2 decimal places ("%.2f") and remvoing minus sign with ( Math.abs() ) method.
+            // Discount when VAT checkbox is inactive (Discounted price with VAT)
+            if(!(vat.isSelected())){
+                
+                total_purchase(); // Recalculating total cost with VAT
+                Double CustomerDiscount; // Used in calculating difference between total price without vat and discount from POS
+                Double POS_Discount = 0.0; // Declared and initialized variable used to get discount value from POS
+                
+                Double price = Double.valueOf(totalPrice.getText()); // Getting total price value from POS system and converting to a Double variable
+                
+                // Try-catch block to catch potential numberFormatException when getting discount from POS
+                try{
+                    POS_Discount = Double.valueOf(discount.getText()); // Getting amount being discounted for the customer from POS system and converting to a Double variable.
+                } catch (NumberFormatException e){
+                    try {
+                        logMessage.log("NumberFormatException: " + e.getMessage());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                CustomerDiscount = price - POS_Discount; // Calculating the difference (discount) from the total cost and amount being discounted for the customer.
+                String cd = String.format("%.2f", Math.abs(CustomerDiscount)); // Formating change to 2 decimal places ("%.2f") and remvoing minus sign with ( Math.abs() ) method.
 
-            totalPrice.setText(String.valueOf(cd)); // Setting change on POS screen
-
+                totalPrice.setText(String.valueOf(cd)); // Displaying discounted total in POS
+                
+            }
+            
         }
         
     }//GEN-LAST:event_discountKeyReleased
@@ -3975,7 +4016,6 @@ public class Main_menu extends javax.swing.JFrame {
             
         }
 
-
     }//GEN-LAST:event_jLabel18MouseClicked
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
@@ -4034,7 +4074,8 @@ public class Main_menu extends javax.swing.JFrame {
                 if (reply == JOptionPane.YES_OPTION) {
 
                     // Creating invoice and updating inventory stock data 
-                    total_purchase(); // Recalculate values before being used to generate PDF invoice.
+                    total_purchase(); // Recalculate values with VAT before being used to generate PDF invoice.
+                    noVAT_purchase(); // Recalculate values without VAT before being used to generate PDF invoice.
 
                     cusName = customerName.getText();
                     cusTel = customerTel.getText();
@@ -4113,7 +4154,8 @@ public class Main_menu extends javax.swing.JFrame {
 
         if (!(posTable.getRowCount() == 0)){
             
-            total_purchase(); // Recalculate values before being used to generate PDF quotation.
+            total_purchase(); // Recalculate values with VAT before being used to generate PDF quotation.
+            noVAT_purchase(); // Recalculate values without VAT before being used to generate PDF quotation.
         
             cusName = customerName.getText();
             cusTel = customerTel.getText();
@@ -4948,6 +4990,74 @@ public class Main_menu extends javax.swing.JFrame {
     private void jLabel80MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel80MouseExited
         jLabel80.setForeground(Color.white);
     }//GEN-LAST:event_jLabel80MouseExited
+
+    private void prodID_searchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_prodID_searchKeyPressed
+
+        /* Action for searching database performed using the enter key */
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            
+            // Searching for products in database using the product ID field          
+            try {
+
+                // Query used to get data using product id search from the database
+                String query = "Select product_id, stock_level, price, product_name from inventory_data where product_id=?";
+                pst = POS_source.mycon().prepareStatement(query);
+                pst.setString(1, prodID_search.getText());
+                rs = pst.executeQuery();   
+
+                // Setting all the data gathered about the product in their respected places
+                if (rs.next()) {
+                    pos_prodID.setText(rs.getString("product_id"));
+                    prodID_search.setText(rs.getString("product_id"));
+                    avail_quantity.setText(rs.getString("stock_level"));
+                    avail_stocks.setText(rs.getString("stock_level"));
+                    unit_price.setText(rs.getString("price"));
+                    select_prod.setSelectedItem(rs.getString("product_name"));
+
+                }
+         
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                try {
+                    logMessage.log("SQLException: " + ex.getMessage());
+                } catch (IOException ex1) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+         
+        }
+        
+    }//GEN-LAST:event_prodID_searchKeyPressed
+
+    private void userID_searchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userID_searchKeyPressed
+        // Searching for users in database using the user ID field using Enter key/button         
+         try {
+                
+                String query = "Select user_id, password, user_name, user_type from users where user_id=?";
+                pst = POS_source.mycon().prepareStatement(query);
+                pst.setString(1, userID_search.getText());
+                rs = pst.executeQuery();   
+
+                if (rs.next()) {
+
+                    userID.setText(rs.getString("user_id"));
+                    userPass.setText(rs.getString("password"));
+                    userName.setText(rs.getString("user_name"));
+                    userType.setSelectedItem(rs.getString("user_type"));
+                    select_user.setSelectedItem(rs.getString("user_name"));
+
+                }
+
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+                try {
+                    logMessage.log("SQLException: " + ex.getMessage());
+                } catch (IOException ex1) {
+                    Logger.getLogger(Main_menu.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+    }//GEN-LAST:event_userID_searchKeyPressed
 
     /**
      * @param args the command line arguments

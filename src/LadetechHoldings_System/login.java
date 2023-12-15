@@ -1,6 +1,7 @@
 package LadetechHoldings_System;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -140,6 +141,11 @@ public class login extends javax.swing.JFrame {
                 userIDActionPerformed(evt);
             }
         });
+        userID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                userIDKeyPressed(evt);
+            }
+        });
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Password ");
@@ -151,6 +157,11 @@ public class login extends javax.swing.JFrame {
         password.setForeground(new java.awt.Color(255, 255, 255));
         password.setMinimumSize(new java.awt.Dimension(6, 24));
         password.setPreferredSize(new java.awt.Dimension(227, 24));
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordKeyPressed(evt);
+            }
+        });
 
         jCheckBox1.setBackground(new java.awt.Color(0, 102, 102));
         jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
@@ -419,6 +430,132 @@ public class login extends javax.swing.JFrame {
         jLabel3.setText("User ID");
         jLabel4.setText("Password");
     }//GEN-LAST:event_jLabel2MouseExited
+
+    private void userIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userIDKeyPressed
+        
+        /* Using Enter key on keyboard to login */
+        
+        if(evt.getKeyCode()== KeyEvent.VK_ENTER) {
+            
+            if (userID.getText().isEmpty() && password.getText().isEmpty()){
+            
+            jLabel3.setText("User ID is empty");
+            jLabel4.setText("Password is empty");
+            
+        }          
+        else if (userID.getText().isEmpty()){
+            
+            JOptionPane.showMessageDialog(null, "User ID is empty", "Login Error", JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+        else if (password.getText().isEmpty()){
+            
+            JOptionPane.showMessageDialog(null, "Password is empty", "Login Error", JOptionPane.INFORMATION_MESSAGE); 
+            
+        }
+        else{
+            
+            try{
+                
+                 String query = "SELECT * FROM `users` WHERE user_id=? and password=?";
+                 pst = POS_source.mycon().prepareStatement(query);
+                 pst.setString(1, userID.getText());
+                 pst.setString(2, password.getText());
+                 rs = pst.executeQuery();
+
+                if (rs.next()){
+
+                    Thread.sleep(5);
+
+                    user_id = (rs.getString("user_id"));
+                    pass = (rs.getString("password"));
+                    user_name = (rs.getString("user_name"));
+                    user_type = (rs.getString("user_type"));
+
+                    Main_menu menu = new Main_menu();
+                    dispose(); // Stop screen from taking memory in background...window completely terminated
+                    menu.show(); // Bring up main menu window
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "User ID or Password is incorrect.", "Login Error", JOptionPane.ERROR_MESSAGE);
+                }
+            
+            }catch(SQLException ex){
+                System.out.println(ex.getMessage());          
+            } catch (InterruptedException | IOException ex) {
+                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);    
+            } catch (NullPointerException ex){
+                System.out.println(ex);
+            }
+        
+        }
+            
+       }
+        
+    }//GEN-LAST:event_userIDKeyPressed
+
+    private void passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyPressed
+        
+        /* Using Enter key on keyboard to login */
+        
+        if(evt.getKeyCode()== KeyEvent.VK_ENTER) {
+            
+            if (userID.getText().isEmpty() && password.getText().isEmpty()){
+            
+            jLabel3.setText("User ID is empty");
+            jLabel4.setText("Password is empty");
+            
+        }          
+        else if (userID.getText().isEmpty()){
+            
+            JOptionPane.showMessageDialog(null, "User ID is empty", "Login Error", JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+        else if (password.getText().isEmpty()){
+            
+            JOptionPane.showMessageDialog(null, "Password is empty", "Login Error", JOptionPane.INFORMATION_MESSAGE); 
+            
+        }
+        else{
+            
+            try{
+                
+                 String query = "SELECT * FROM `users` WHERE user_id=? and password=?";
+                 pst = POS_source.mycon().prepareStatement(query);
+                 pst.setString(1, userID.getText());
+                 pst.setString(2, password.getText());
+                 rs = pst.executeQuery();
+
+                if (rs.next()){
+
+                    Thread.sleep(5);
+
+                    user_id = (rs.getString("user_id"));
+                    pass = (rs.getString("password"));
+                    user_name = (rs.getString("user_name"));
+                    user_type = (rs.getString("user_type"));
+
+                    Main_menu menu = new Main_menu();
+                    dispose(); // Stop screen from taking memory in background...window completely terminated
+                    menu.show(); // Bring up main menu window
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "User ID or Password is incorrect.", "Login Error", JOptionPane.ERROR_MESSAGE);
+                }
+            
+            }catch(SQLException ex){
+                System.out.println(ex.getMessage());          
+            } catch (InterruptedException | IOException ex) {
+                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);    
+            } catch (NullPointerException ex){
+                System.out.println(ex);
+            }
+        
+        }
+            
+       }
+        
+    }//GEN-LAST:event_passwordKeyPressed
 
     /**
      * @param args the command line arguments

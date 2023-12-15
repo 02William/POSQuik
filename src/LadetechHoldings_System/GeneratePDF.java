@@ -40,7 +40,7 @@ public class GeneratePDF {
         String desktopPath  = System.getProperty("user.home") + "/Desktop"; // Getting path to desktop
         String invoicePath = desktopPath  + "/Invoice's\\invoice -" + " " + String.format("%05d", invoiceNo) + ".pdf";
         
-        // Calculating totaln tax and amount due
+        // Calculating total tax and amount due
         Double tempTax = Double.parseDouble(noVatTotal) * taxRate;
         Double tempAmountDue = (Double.valueOf(noVatTotal) + tempTax) - Double.parseDouble(discount);
         
